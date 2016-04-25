@@ -32,9 +32,6 @@ var isWebsiteHasWebcamPermissions = false;
 // http://dev.w3.org/2011/webrtc/editor/getusermedia.html#mediadevices
 // todo: switch to enumerateDevices when landed in canary.
 function checkDeviceSupport(callback) {
-    if (!canEnumerate) {
-        return;
-    }
 
     // This method is useful only for Chrome!
 
@@ -46,7 +43,7 @@ function checkDeviceSupport(callback) {
         navigator.enumerateDevices = navigator.enumerateDevices.bind(navigator);
     }
 
-    if (!navigator.enumerateDevices) {
+    if (!canEnumerate || !navigator.enumerateDevices) {
         if (callback) {
             callback();
         }
